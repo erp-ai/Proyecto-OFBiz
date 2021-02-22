@@ -1433,6 +1433,113 @@ under the License.
         <field name="submitButton" title="${uiLabelMap.CommonUpload}"><submit button-type="button"/></field>
     </form>
     
+    <!--Formulario de reasignacion de prospecto -->
+    <form name="ReasignarVendedor" type="single" target="reasignaVendedor">
+        <auto-fields-service service-name="reasignaVendedor"/>
+        <field name="partyId" title="Id del prospecto a Cambiar"><lookup target-form-name="LookupPartyName"/></field>
 
+       <field name="createdByUserLogin" title="Usuario a asignar" required-field="true"><drop-down no-current-selected-key="Social">
+                <entity-options entity-name="Vendedores" key-field-name="userLoginId" description="${partyId} ${firstName}  ${lastName}">
+                    <entity-order-by field-name="userLoginId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+
+        <field name="submitButton" title="Cambiar">
+            <submit button-type="button"/>
+        </field>
+    </form>
+
+    <!--Formulario de Asignacion del grupo de segurida -->
+    <form name="Asignargrupsecurity" type="single" target="asignargrupsecurity">
+        <auto-fields-service service-name="addUserLoginToSecurityGroup"/>
+        <field name="userLoginId" title="Usuario de ventas "><lookup target-form-name="LookupUserLogin"/></field>
+        <field name="groupId" title="Tipo de seguridad">
+            <drop-down allow-empty="false">
+                <option key="Vendedor_Piso" description="Vendedor de piso"/>
+            </drop-down>
+        </field>
+        <field name="submitButton" title="Asignar"><submit button-type="button"/></field>
+    </form>
+
+    <!--Formulario para Registrar vendedor-->
+    <form name="RegistroVendedor" type="single" target="${target}${previousParams}"
+        focus-field-name="USER_TITLE" header-row-style="header-row" default-table-style="basic-table">
+       <field name="USE_ADDRESS"><hidden value="${USE_ADDRESS}"/></field>
+        <field name="require_email"><hidden value="${require_email}"/></field>
+        <field name="Datos vendedor" title="Datos del Vendedor" title-area-style="group-label"><display description=" " also-hidden="false"/></field>
+        <field name="USER_FIRST_NAME" title="${uiLabelMap.PartyFirstName}" required-field="true"><text size="30" maxlength="60"/></field>
+        <field name="USER_LAST_NAME" title="${uiLabelMap.PartyLastName}" required-field="true"><text size="30" maxlength="60"/></field>
+        <field name="MobilePhoneTitle" title="${uiLabelMap.PartyContactMobilePhoneNumber}" title-area-style="group-label"><display description=" " also-hidden="false"/></field>
+        <field name="USER_MOBILE_COUNTRY" title="${uiLabelMap.CommonCountryCode}"><text size="4" maxlength="3"/></field>
+        <field name="USER_MOBILE_AREA" title="${uiLabelMap.PartyAreaCode}"><text size="4" maxlength="3"/></field>
+        <field name="USER_MOBILE_CONTACT" title="${uiLabelMap.PartyPhoneNumber}"><text size="15" maxlength="7"/></field>
+        <field name="WorkPhoneTitle" title="${uiLabelMap.PartyContactWorkPhoneNumber}" title-area-style="group-label"><display description=" " also-hidden="false"/></field>
+        <field name="USER_WORK_COUNTRY" title="${uiLabelMap.CommonCountryCode}"><text size="4" maxlength="3"/></field>
+        <field name="USER_WORK_AREA" title="${uiLabelMap.PartyAreaCode}"><text size="4" maxlength="3"/></field>
+        <field name="USER_WORK_CONTACT" title="${uiLabelMap.PartyPhoneNumber}"><text size="15" maxlength="7"/></field>
+        <field name="USER_WORK_EXT" title="${uiLabelMap.PartyContactExt}"><text size="6" maxlength="10"/></field>
+        <field name="EmailAddressTitle" title="${uiLabelMap.PartyEmailAddress}" title-area-style="group-label"><display description=" " also-hidden="false"/></field>
+        <field use-when="require_email!=null" name="USER_EMAIL" title="${uiLabelMap.CommonEmail}" required-field="true"><text size="60" maxlength="250"/></field>
+        <field use-when="require_email==null" name="USER_EMAIL" title="${uiLabelMap.CommonEmail}" required-field="true"><text size="60" maxlength="250"/></field>
+        <!-- <field name="USER_ORDER_EMAIL" title="Order Emails (comma separated)" ><text size="60" maxlength="250"/></field> -->
+        <field use-when="displayPassword=='Y'" name="USERNAME" title="${uiLabelMap.CommonUsername}" required-field="true"><text size="30" maxlength="250"/></field>
+        <field use-when="displayPassword=='Y'" name="PASSWORD" title="${uiLabelMap.CommonPassword}" required-field="true"><password size="15" maxlength="250"/></field>
+        <field use-when="displayPassword=='Y'" name="CONFIRM_PASSWORD" title="${uiLabelMap.CommonPassword}" tooltip="* ${uiLabelMap.CommonConfirm}" required-field="true"><password size="15" maxlength="250"/></field>
+        <field use-when="displayPassword!='Y'" name="USERNAME" title="${uiLabelMap.CommonUsername}" tooltip="* ${uiLabelMap.PartyTemporaryPassword}" required-field="true"><text size="30" maxlength="250"/></field>
+        <!--<field name="RequiredNote" title=" "><display description="${uiLabelMap.PartyRequiredNote}" also-hidden="false"/></field> -->
+        <field name="submitButton" title="${uiLabelMap.CommonSave}" widget-style="smallSubmit"><submit button-type="text-link"/></field>
+    </form>
+
+    <!--Formulario para registrar nuevo prospecto-->
+    <form name="New_Prospect" type="single" target="${target}${previousParams}"
+        focus-field-name="USER_TITLE" header-row-style="header-row" default-table-style="basic-table">
+        
+        <field name="Info" title="Informacion del prospecto" title-area-style="group-label"><display description=" " also-hidden="false"/></field>
+        <field name="USER_FIRST_NAME" title="${uiLabelMap.PartyFirstName}" required-field="true"><text size="30" maxlength="60"/></field>
+        <field name="USER_LAST_NAME" title="${uiLabelMap.PartyLastName}" required-field="true"><text size="30" maxlength="60"/></field>
+        <field name="MobilePhoneTitle" title="${uiLabelMap.PartyContactMobilePhoneNumber}" title-area-style="group-label"><display description=" " also-hidden="false"/></field>
+        <field name="USER_MOBILE_COUNTRY" title="${uiLabelMap.CommonCountryCode}"><text size="4" maxlength="10"/></field>
+        <field name="USER_MOBILE_AREA" title="${uiLabelMap.PartyAreaCode}"><text size="4" maxlength="10"/></field>
+        <field name="USER_MOBILE_CONTACT" title="${uiLabelMap.PartyPhoneNumber}" required-field="true"><text size="15" maxlength="15"/></field>
+        <field name="HomePhoneTitle" title="${uiLabelMap.PartyHomePhone}" title-area-style="group-label" widget-style="tooltip"><display description="Se requiere al menos el numero movil que tenga vinculado whatsapp" also-hidden="false"/></field>
+        <field name="USER_HOME_COUNTRY" title="${uiLabelMap.CommonCountryCode}"><text size="4" maxlength="10"/></field>
+        <field name="USER_HOME_AREA" title="${uiLabelMap.PartyAreaCode}"><text size="4" maxlength="10"/></field>
+        <field name="USER_HOME_CONTACT" title="${uiLabelMap.PartyPhoneNumber}"><text size="15" maxlength="15"/></field>
+        <field name="USER_HOME_EXT" title="${uiLabelMap.PartyContactExt}"><text size="6" maxlength="10"/></field>
+        <field name="USE_ADDRESS"><hidden value="${USE_ADDRESS}"/></field>
+        <field name="require_email"><hidden value="${require_email}"/></field>
+
+        <field name="EmailAddressTitle" title="${uiLabelMap.PartyEmailAddress}" title-area-style="group-label"><display description=" " also-hidden="false"/></field>
+        <field name="HomeMailTitle" title="Email" title-area-style="group-label" widget-style="tooltip"><display description="Se requiere un correo electronico personal" also-hidden="false"/></field>
+        <field use-when="require_email!=null" name="USER_EMAIL" title="${uiLabelMap.CommonEmail}" required-field="true"><text size="60" maxlength="250"/></field>
+        <field use-when="require_email==null" name="USER_EMAIL" title="${uiLabelMap.CommonEmail}" required-field="true"><text size="60" maxlength="250"/></field>
+        
+       <field name="USERNAME"  title="Se enviara publicidad al correo ingresado" required-field="false" attrs="{'invisible':1}"><drop-down allow-empty="false"><option key="Y" description="Si"/></drop-down></field>
+        
+        <field name="USER_COUNTRY" title="${uiLabelMap.CommonCountry}" required-field="true">
+            <drop-down no-current-selected-key="${defaultCountryGeoId}">
+                <entity-options entity-name="Geo" key-field-name="geoId" description="${geoId}: ${geoName}">
+                    <entity-constraint name="geoTypeId" value="COUNTRY"/>
+                    <entity-order-by field-name="geoId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+         <field name="USER_STATE" title="Estado de la república de donde se comunica?" required-field="true"><drop-down no-current-selected-key="${defaultCountryGeoId}">
+                <entity-options entity-name="Geo" key-field-name="geoId" description="${geoId}: ${geoName}">
+                    <entity-constraint name="geoTypeId" value="STATE"/>
+                    <entity-order-by field-name="geoTypeId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="INCML" title="Informacion Complementaria" title-area-style="group-label"><display description=" " also-hidden="false"/></field>
+        <field name="MSE" title="Por que medio se entero de nosotros?" required-field="true"><drop-down allow-empty="false"><option key="Pagina Web" description="Pagina Web"/><option key="A+" description="A+"/><option key="Tercer milenio" description="Tercer milenio"/><option key="Feria de Franquicias" description="Feria de Franquicias"/><option key="Recomendación" description="Recomendación"/><option key="Anuncio en google" description="Anuncio en google"/><option key="TikTok" description="TikTok"/><option key="Asociación Mexicana de Franquicias" description="Asociación Mexicana de Franquicias"/><option key="100 Franquicias Camioneta / Camion" description="100 Franquicias Camioneta / Camion"/><option key="Facebook" description="Facebook"/><option key="Twitter" description="Twitter"/><option key="Llamada" description="Llamada"/><option key="Piso" description="Piso"/><option key="AMF" description="AMF"/><option key="Franquicias Hoy" description="Franquicias Hoy"/><option key="YouTube" description="YouTube"/><option key="Instagram" description="Instagram"/><option key="Radio" description="Radio"/><option key="Revista" description="Revista"/><option key="Espectacular" description="Espectacular"/></drop-down></field>
+        <field name="PCN" title="Se ha comunicado con nosotros antes? " required-field="true"><drop-down allow-empty="false"><option key="No" description="No"/><option key="Si" description="Si"/>
+            </drop-down></field>
+        <field name="MSJ" title="Mensaje" required-field="false"><text size="120" maxlength="60"/></field>
+        <field name="submitButton" title="${uiLabelMap.CommonSave}" widget-style="smallSubmit"><submit button-type="text-link"/></field>
+    </form>
+
+    <!--Formulario de preguntas complementarias-->
     
 </forms>

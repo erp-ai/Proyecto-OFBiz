@@ -26,7 +26,7 @@
         <menu-item name="comm" title="${uiLabelMap.PartyCommunications}"><link target="FindCommunicationEvents"/></menu-item>
         <menu-item name="visits" title="${uiLabelMap.PartyVisits}"><link target="findVisits"/></menu-item>
         <menu-item name="loggedinusers" title="${uiLabelMap.PartyLoggedInUsers}"><link target="listLoggedInUsers"/></menu-item>
-        <menu-item name="classification" title="${uiLabelMap.PartyClassifications}"><link target="showclassgroups"/></menu-item>
+        <!-- <menu-item name="classification" title="${uiLabelMap.PartyClassifications}"><link target="showclassgroups"/></menu-item>
         <menu-item name="security" title="${uiLabelMap.CommonSecurity}">
             <condition>
                 <if-service-permission service-name="partyBasePermissionCheck" main-action="VIEW"/>
@@ -35,7 +35,8 @@
         </menu-item>
         <menu-item name="addrmap" title="${uiLabelMap.PageTitleAddressMatchMap}"><link target="addressMatchMap"/></menu-item>
         <menu-item name="partyinv" title="${uiLabelMap.PartyInvitation}"><link target="partyInvitation"/></menu-item>
-        <menu-item name="importexport" title="${uiLabelMap.CommonImportExport}"><link target="ImportExport"/></menu-item>
+        <menu-item name="importexport" title="${uiLabelMap.CommonImportExport}"><link target="ImportExport"/></menu-item> -->
+        <menu-item name="reasignar" title="Asignaciones"><link target="ReasignarVendedor"/></menu-item>
     </menu>
 
     <menu name="ProfileTabBar" extends="CommonTabBarMenu" extends-resource="component://common/widget/CommonMenus.xml"
@@ -45,7 +46,12 @@
                 <parameter param-name="partyId"/>
             </link>
         </menu-item>
-        <menu-item name="preferences" title="${uiLabelMap.CommonPreferences}">
+        <menu-item name="InfoComple" title="Informacion Complementaria">
+            <link target="viewprofile">
+                <parameter param-name="partyId"/>
+            </link>
+        </menu-item>
+        <!--<menu-item name="preferences" title="${uiLabelMap.CommonPreferences}">
             <link target="Preferences">
                 <parameter param-name="partyId"/>
             </link>
@@ -142,7 +148,7 @@
             <link target="ViewProductStoreRoles">
                 <parameter param-name="partyId"/>
             </link>
-        </menu-item>
+        </menu-item>-->
     </menu>
     <menu name="ProfileSubTabBar" menu-container-style="button-bar button-style-2">
         <menu-item name="createNew" title="${uiLabelMap.AccountingBillingAccount}" >
@@ -246,11 +252,19 @@
             </condition>
             <link target="NewProspect"/>
         </menu-item>
-        <menu-item name="create-employee" title="${uiLabelMap.PartyCreateNewEmployee}" >
+        <!--<menu-item name="create-employee" title="${uiLabelMap.PartyCreateNewEmployee}" >
             <condition>
                 <if-has-permission permission="PARTYMGR" action="_CREATE"/>
             </condition>
             <link target="NewEmployee"/>
+        </menu-item>-->
+
+        <!--Menu de registar vendedor-->
+        <menu-item name="create-employee-sales" title="Registrar Vendedor">
+            <condition>
+                <if-has-permission permission="PARTYMGR" action="_CREATE"/>
+            </condition>
+            <link target="NewEmployeeSales"/>
         </menu-item>
     </menu>
 

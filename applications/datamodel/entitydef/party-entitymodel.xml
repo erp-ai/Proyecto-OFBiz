@@ -3066,5 +3066,176 @@ under the License.
             <key-map field-name="partyClassificationTypeId"/>
         </view-link>
     </view-entity>
-    
+    <!-- Tabla preguntas y medios-->
+    <entity entity-name="Medios"
+        package-name="org.apache.ofbiz.party.party"
+        title="Medios Entity">
+        <field name="partyId" type="id-ne"></field>   
+        <field name="medioSeEntero" type="description"></field>
+        <field name="mensaje" type="description"></field>
+        <field name="primeraComunicacion" type="description"></field>
+        <field name="status" type="description"></field> 
+        <field name="sucursal" type="description"></field>
+        <field name="tomaContacto" type="description"></field>
+        <prim-key field="partyId"/>
+    </entity>
+
+    <!--
+      <entity entity-name="Preguntas"
+        package-name="org.apache.ofbiz.party.party"
+        title="Preguntas Entity">
+        <field name="partyId" type="description"></field>   
+        <field name="Acerca_AguaIn" type="description"></field>
+        <field name="Ciudad_Franquicia" type="description"></field>
+        <field name="Tipo_Negocio" type="description"></field>
+        <field name="Tipo_Equipo" type="description"></field>
+        <field name="Cuenta_C_Local" type="description"></field>
+        <field name="TipoA_Purificar" type="description"></field>
+        <field name="Ocupacion" type="description"></field>
+        <field name="Tipo_Cita" type="description"></field>
+        <field name="EstadoR_Se_Comunica" type="description"></field>
+    </entity>
+    -->
+
+    <!--Vista para Listar los venderores en la reasignacion de vendedor-->
+    <view-entity entity-name="Vendedores" 
+            package-name="org.apache.ofbiz.party.party" 
+            title="Lista de los vendedores con su nombre, party id y user login"> 
+      <member-entity entity-alias="PS" entity-name="Person"/> 
+      <member-entity entity-alias="PR" entity-name="PartyRole"/> 
+      <member-entity entity-alias="UL" entity-name="UserLogin"/> 
+      <alias entity-alias="UL" name="partyId"/> 
+      <alias entity-alias="PS" name="firstName"/> 
+      <alias entity-alias="PS" name="lastName"/> 
+      <alias entity-alias="UL" name="userLoginId"/> 
+      <view-link entity-alias="PS" rel-entity-alias="PR"> 
+        <key-map field-name="partyId"/> 
+      </view-link> 
+      <view-link entity-alias="PR" rel-entity-alias="UL"> 
+        <key-map field-name="partyId"/> 
+        <entity-condition> 
+          <condition-list combine="and"> 
+                    <condition-expr field-name="roleTypeId" entity-alias="PR" operator="equals" value="SALES_REP"/> 
+                    <condition-expr field-name="userLoginId" entity-alias="UL" operator="not-like" value="%admin"/> 
+                </condition-list> 
+        </entity-condition> 
+      </view-link> 
+    </view-entity>
+
+    <!--Vista para listar prospectos en reasignacion de vendedor-->
+    <view-entity entity-name="PartyNameViewProspect"
+            package-name="org.apache.ofbiz.party.party"
+            title="Party Name View Entity">
+      <member-entity entity-alias="PTY" entity-name="Party"/>
+      <member-entity entity-alias="PER" entity-name="Person"/>
+      <member-entity entity-alias="PCM" entity-name="PartyContactMech"/>
+        <member-entity entity-alias="TN" entity-name="TelecomNumber"/>
+      <member-entity entity-alias="CM" entity-name="ContactMech"/>
+      <member-entity entity-alias="PR" entity-name="PartyRole"/>
+      <member-entity entity-alias="PTYGRP" entity-name="PartyGroup"/>
+      <alias entity-alias="PTY" name="partyId"/>
+      <alias entity-alias="PTY" name="partyTypeId"/>
+      <alias entity-alias="PTY" name="description"/>
+      <alias entity-alias="PTY" name="statusId"/>
+      <alias entity-alias="PER" name="firstName"/>
+      <alias entity-alias="PER" name="middleName"/>
+      <alias entity-alias="PER" name="lastName"/>
+      <alias entity-alias="PER" name="firstNameLocal"/>
+      <alias entity-alias="PER" name="lastNameLocal"/>
+      <alias entity-alias="PER" name="personalTitle"/>
+      <alias entity-alias="PER" name="suffix"/>
+      <alias entity-alias="PTYGRP" name="groupName"/>
+      <alias entity-alias="PTYGRP" name="groupNameLocal"/>
+      <alias entity-alias="CM" name="infoString"/>
+      <alias entity-alias="TN" name="contactNumber"/>
+      <alias entity-alias="PR" name="roleTypeId"/>
+
+      <view-link entity-alias="PTY" rel-entity-alias="PCM">
+            <key-map field-name="partyId"/>
+        </view-link>
+      <view-link entity-alias="PTY" rel-entity-alias="PER" rel-optional="true">
+        <key-map field-name="partyId"/>
+      </view-link>
+      <view-link entity-alias="PTY" rel-entity-alias="PTYGRP" rel-optional="true">
+        <key-map field-name="partyId"/>
+      </view-link>
+      <view-link entity-alias="PCM" rel-entity-alias="CM" rel-optional="true">
+            <key-map field-name="contactMechId"/>
+      </view-link>
+        <view-link entity-alias="PCM" rel-entity-alias="TN" rel-optional="true">
+            <key-map field-name="contactMechId"/>
+        </view-link>
+      <view-link entity-alias="PTY" rel-entity-alias="PR">
+            <key-map field-name="partyId"/>
+            <entity-condition>
+                <condition-expr entity-alias="PR" field-name="roleTypeId" operator="equals" value="PROSPECT"/>    
+            </entity-condition>
+        </view-link>
+      <relation type="one-nofk" rel-entity-name="Party">
+        <key-map field-name="partyId"/>
+      </relation>
+    </view-entity>
+
+    <!--Vista para listar vendedores en la el grupo de seguridad-->
+    <view-entity entity-name="UserLoginAndPartyDetailsVendor"
+            package-name="org.apache.ofbiz.party.party"
+            title="UserLogin, Party, Person and PartyGroup">
+      <member-entity entity-alias="ULN" entity-name="UserLogin"/>
+      <member-entity entity-alias="PTY" entity-name="Party"/>
+      <member-entity entity-alias="PER" entity-name="Person"/>
+      <member-entity entity-alias="PR" entity-name="PartyRole"/>
+      <member-entity entity-alias="PTYGRP" entity-name="PartyGroup"/>
+      <alias entity-alias="PTY" name="partyId"/>
+      <alias entity-alias="PTY" name="partyTypeId"/>
+      <alias entity-alias="PTY" name="createdDate"/>
+      <alias entity-alias="PTY" name="statusId"/>
+      <alias entity-alias="PTYGRP" name="groupName"/>
+      <alias entity-alias="ULN" name="userLoginId"/>
+      <alias entity-alias="ULN" name="currentPassword"/>
+      <alias entity-alias="ULN" name="passwordHint"/>
+      <alias entity-alias="ULN" name="enabled"/>
+      <alias entity-alias="ULN" name="disabledDateTime"/>
+      <alias entity-alias="ULN" name="successiveFailedLogins"/>
+      <alias entity-alias="PER" name="lastName"/>
+      <alias entity-alias="PER" name="middleName"/>
+      <alias entity-alias="PER" name="firstName"/>
+      <alias entity-alias="PR" name="roleTypeId"/>
+      <view-link entity-alias="ULN" rel-entity-alias="PTY" rel-optional="true">
+        <key-map field-name="partyId"/>
+      </view-link>
+      <view-link entity-alias="ULN" rel-entity-alias="PER" rel-optional="true">
+        <key-map field-name="partyId"/>
+      </view-link>
+      <view-link entity-alias="PTY" rel-entity-alias="PR">
+            <key-map field-name="partyId"/>
+            <entity-condition>
+                <condition-expr entity-alias="PR" field-name="roleTypeId" operator="equals" value="SALES_REP"/>    
+            </entity-condition>
+        </view-link>
+      <view-link entity-alias="ULN" rel-entity-alias="PTYGRP" rel-optional="true">
+        <key-map field-name="partyId"/>
+      </view-link>
+      <relation type="one-nofk" rel-entity-name="Party">
+        <key-map field-name="partyId"/>
+      </relation>
+      <relation type="one-nofk" rel-entity-name="UserLogin">
+        <key-map field-name="userLoginId"/>
+      </relation>
+    </view-entity>
+    <entity entity-name="PartyAttribute"
+            package-name="org.apache.ofbiz.party.party"
+            title="Party Attribute Entity">
+      <field name="partyId" type="id-ne"></field>
+      <field name="attrName" type="id-long-ne"></field>
+      <field name="attrValue" type="value"></field>
+      <field name="attrDescription" type="description"></field>
+      <prim-key field="partyId"/>
+      <prim-key field="attrName"/>
+      <relation type="one" fk-name="PARTY_ATTR" rel-entity-name="Party">
+        <key-map field-name="partyId"/>
+      </relation>
+      <relation type="many" rel-entity-name="PartyTypeAttr">
+        <key-map field-name="attrName"/>
+      </relation>
+    </entity>
 </entitymodel>

@@ -1296,9 +1296,39 @@ under the License.
         <response name="success" type="view" value="ProfileEditUserLoginSecurityGroups"/>
     </request-map>
 
+    <!-- Mapeo del formulario de asignacion de gupos de seguridad y reasignacion de vendedores-->
+    <request-map uri="ReasignarVendedor">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="ReasignarVendedor"></response>
+    </request-map>
+
+    <!--Mapeo grupo de segurida-->
+    <request-map uri="asignargrupsecurity">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="addUserLoginToSecurityGroup"/>
+    <response name="success" type="view" value="ReasignarVendedor"/>
+    </request-map>
+
+    <!--Mapeo de registro de vendedor-->
+    <request-map uri="NewEmployeeSales"><security https="true" auth="true"/><response name="success" type="view" value="NewEmployeeSales"/></request-map>
+    <request-map uri="createEmployee">
+        <security https="true" auth="true"/>
+        <event type="simple" path="component://party/minilang/user/UserEvents.xml" invoke="createEmployeeSales"/>
+        <response name="success" type="request-redirect" value="viewprofile">
+            <redirect-parameter name="partyId"/>
+        </response>
+        <response name="error" type="view" value="RegistrarVendedor"/>
+    </request-map>
+
     <!-- end of request mappings -->
 
     <!-- View Mappings -->
+    <!-- Vista formulario de asignacion de gupos de seguridad y reasignacion de vendedores-->
+    <view-map name="ReasignarVendedor" type="screen" page="component://party/widget/partymgr/PartyScreens.xml#Asignacion"/>
+    
+    <!--Vista de registro de vendedor-->
+    <view-map name="NewEmployeeSales" type="screen" page="component://party/widget/partymgr/PartyScreens.xml#RegistrarVendedor"/>
+    
     <view-map name="main" type="screen" page="component://party/widget/partymgr/PartyScreens.xml#findparty"/>
 
     <view-map name="findparty" type="screen" page="component://party/widget/partymgr/PartyScreens.xml#findparty"/>

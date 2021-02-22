@@ -1441,4 +1441,28 @@ under the License.
         <description>Delete a CommunicationEventPrpTyp</description>
         <auto-attributes include="pk" mode="IN" optional="false"/>
     </service>
+
+    <!--Servicio Reasignar Prospectos-->
+    <service name="reasignaVendedor" default-entity-name="Party" engine="entity-auto" invoke="update" auth="true"> 
+        <description> 
+        Servicio que reasigna el usuario al que pertenece un prospecto 
+        </description> 
+        <auto-attributes include="pk" mode="IN" optional="false"/> 
+        <attribute name="createdByUserLogin" type="String" mode="IN" optional="false"/> 
+        <override name="createdByUserLogin" optional="true"/> 
+    </service>
+
+    <!--Servicio  para asignar grupo de seguridad de vendedores-->
+    <request-map uri="asignargrupsecurity">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="addUserLoginToSecurityGroup"/>
+    <response name="success" type="view" value="FindOfbiz"/>
+    </request-map>
+
+    <!--Servicio de medios de comunicacion-->
+     <service name="MediosComunicacion" default-entity-name="Medios"  engine="entity-auto" invoke="create" auth="true">
+        <description>Medios de comunicacion</description>
+        <auto-attributes include="pk" mode="IN" optional="false"/>
+        <auto-attributes include="nonpk" mode="IN" optional="true"/> 
+    </service>
 </services>

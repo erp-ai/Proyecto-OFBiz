@@ -25,7 +25,25 @@ under the License.
     <SecurityGroup groupId="FLEXADMIN" description="Flexible Admin group, has all granular permissions."/>
     <SecurityGroup groupId="VIEWADMIN" description="Demo Admin group, has all view permissions."/>
     <SecurityGroup groupId="BIZADMIN" description="Full Business Applications permission group, has all business app admin permissions, not technical permissions."/>
-    
+    <!--Se crea el grupo de gerente de ventas-->
+    <SecurityGroup groupId="Gerente_Ventas" description="Grupo que permite al gerente de ventas administar el menu Participante"/>
+    <!--Se crea el grupo de gerente de piso-->
+    <SecurityGroup groupId="Vendedor_Piso" description="Grupo enfocado a vendedores de piso con acceso limitado a las acciones del menu Participante"/>
+
+    <!--Asignacion de los permisos de ver, editar, crear y borrar del gerente de ventas-->
+    <SecurityGroupPermission groupId="Gerente_Ventas" permissionId="OFBTOOLS_VIEW"/>
+    <SecurityGroupPermission groupId="Gerente_Ventas" permissionId="PARTYMGR_VIEW"/>
+    <SecurityGroupPermission groupId="Gerente_Ventas" permissionId="PARTYMGR_UPDATE"/>
+    <SecurityGroupPermission groupId="Gerente_Ventas" permissionId="PARTYMGR_CREATE"/>
+    <SecurityGroupPermission groupId="Gerente_Ventas" permissionId="PARTYMGR_DELETE"/>
+
+    <!-- Asignacion de permisos al grupo de vendedores-->
+    <SecurityGroupPermission groupId="Vendedor_Piso" permissionId="OFBTOOLS_VIEW"/>
+    <SecurityGroupPermission groupId="Vendedor_Piso" permissionId="PARTYMGR_VIEW"/>
+    <SecurityGroupPermission groupId="Vendedor_Piso" permissionId="PARTYMGR_GRP_UPDATE"/>
+    <SecurityGroupPermission groupId="Vendedor_Piso" permissionId="PARTYMGR_REL_CREATE"/>
+    <SecurityGroupPermission groupId="Vendedor_Piso" permissionId="PARTYMGR_REL_UPDATE"/>
+
     <!-- general admin tools permission -->
     <SecurityPermission description="Permission to access the Stock OFBiz Manager Applications." permissionId="OFBTOOLS_VIEW"/>
     <SecurityGroupPermission groupId="FULLADMIN" permissionId="OFBTOOLS_VIEW"/>
